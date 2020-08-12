@@ -101,8 +101,8 @@ export class AuthModule {
     return {
       ngModule: AuthModule,
       providers: [
-        { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
-        { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
+        //{ provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: filterInterceptorRequest },
+        //{ provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         ...GUARDS],
     };

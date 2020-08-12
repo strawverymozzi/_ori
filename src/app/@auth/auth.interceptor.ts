@@ -6,24 +6,46 @@
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, EMPTY } from 'rxjs';
+import { catchError, retry, map } from 'rxjs/operators';
+import notify from 'devextreme/ui/notify';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
   constructor(private router: Router) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req)
-      .pipe(catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.router.navigate(['auth/login']);
-        }
-        // TODO: handle 403 error ?
-        return throwError(error);
-      }));
+
+    let clonedReq = req;
+    if (!!localStorage.getItem("access") && !!localStorage.getItem("refresh")) {
+      clonedReq = req.clone({
+        headers: req.headers
+          .append('Accept', '*; charset=utf-8')
+          .append('Access-Control-Allow-Origin', '*')
+          .append('Content-Type', 'application/json')
+          .append('authorization', 'Bearer ' + localStorage.getItem('access'))
+          .append('refreshtoken', localStorage.getItem('refresh'))
+          .append('Access-Control-Allow-Headers', '*')
+          .append('Access-Control-Expose-Headers', '*'),
+        //withCredentials: true,
+        responseType: 'json'
+      });
+    }
+
+    return next.handle(clonedReq)
+      .pipe(
+        retry(2),
+        map(res => {
+          return res;
+        }),
+        catchError((error: HttpErrorResponse, caught: Observable<HttpEvent<any>>) => {
+          console.log("Auth INTER")
+          notify({ message: error.message, width: 500, position: 'top' }, 'error', 3000);
+          return EMPTY;
+        })
+      )
+
   }
 }

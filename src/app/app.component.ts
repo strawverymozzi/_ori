@@ -19,11 +19,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private analytics: AnalyticsService,
               private initUserService: InitUserService) {
-              this.initUser();
+              //this.initUser();
   }
 
   ngOnInit(): void {
-    this.analytics.trackPageViews();
+    //this.analytics.trackPageViews();
   }
 
   initUser() {

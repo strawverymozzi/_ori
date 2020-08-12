@@ -13,7 +13,7 @@ import { CountryOrderData } from '../../../@core/interfaces/ecommerce/country-or
   selector: 'ngx-country-orders',
   styleUrls: ['./country-orders.component.scss'],
   template: `
-    <nb-card [size]="breakpoint.width >= breakpoints.md ? 'medium' : 'giant'">
+    <!--<nb-card [size]="breakpoint.width >= breakpoints.md ? 'medium' : 'giant'">
       <nb-card-header>Country Orders Statistics</nb-card-header>
       <nb-card-body [nbSpinner]="!countriesCategories">
         <ngx-country-orders-map (select)="selectCountryById($event)"
@@ -26,7 +26,7 @@ import { CountryOrderData } from '../../../@core/interfaces/ecommerce/country-or
                                   maxValue="20">
         </ngx-country-orders-chart>
       </nb-card-body>
-    </nb-card>
+    </nb-card>-->
   `,
 })
 export class CountryOrdersComponent implements OnInit, OnDestroy {
@@ -40,8 +40,8 @@ export class CountryOrdersComponent implements OnInit, OnDestroy {
   breakpoints: any;
 
   constructor(private themeService: NbThemeService,
-              private breakpointService: NbMediaBreakpointsService,
-              private countryOrderService: CountryOrderData) {
+    private breakpointService: NbMediaBreakpointsService,
+    private countryOrderService: CountryOrderData) {
     this.breakpoints = this.breakpointService.getBreakpointsMap();
   }
 

@@ -10,14 +10,39 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3001/api',
-  testUser: {
-    // tslint:disable
-    token: {
-      expires_in: 3600000,
-      access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiQFVzZXIiLCJyb2xlIjoidXNlciIsIm5iZiI6MTU2NDA2MTQ1NywiZXhwIjoxNTk1NjgzODU3LCJpc3MiOiJpc3N1ZXJfc2FtcGxlIiwiYXVkIjoiYXVkaWVuY2Vfc2FtcGxlIn0.xAAbQIOsw3ZXlIxDFnv5NynZy7OfzrvrJYWsy2NEBbA',
-    },
-    // tslint:enable
-    email: 'user@user.user',
-  },
+  baseUrl: '',
+  MD: 'http://localhost:3001',
+  WM: 'http://localhost:3001',
+  // MD: 'https://aqueous-sierra-56466.herokuapp.com',
+  // WM: 'https://aqueous-sierra-56466.herokuapp.com',
+  defaultLang: window.navigator.language
 };
+
+export const REGISTRY: any = {
+  LOGIN: {
+    INIT: `${environment.MD}/auth/login?language=${environment.defaultLang}`,
+    LOGINUSER: `${environment.MD}/auth/login`
+  },
+  ADMINMENU: {
+    INIT: `${environment.MD}/api/v1/mdm/menu`,
+  },
+  RCVGRID: {
+    POST: `${environment.WM}/api/v1/rec/receive/save`,
+  },
+  PTNKEYGRID: {
+    GET: `${environment.WM}/api/v1/searchHelp/SHPTNGRID?`,
+  },
+  SKUKEYGRID: {
+    GET: `${environment.WM}/api/v1/searchHelp/SHSKUGRID?`,
+  },
+  RCVMASTERGRID: {
+    GET: `${environment.WM}/api/v1/rec/receive/listRcv?criteria=`,
+    POST: `${environment.WM}/api/v1/rec/receive/saveRcv`,
+    DELETE: `${environment.WM}/api/v1/rec/receive/deleteRcv`,
+  },
+  RCVDETAILGRID: {
+    GET: `${environment.WM}/api/v1/rec/receive/listRcvDetail?criteria=`,
+    POST: `${environment.WM}/api/v1/rec/receive/saveRcvDetail`,
+    DELETE: `${environment.WM}/api/v1/rec/receive/deleteRcvDetail`,
+  },
+}
